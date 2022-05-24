@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">CocktailDb</string>
+
+    <string name="main">Main</string>
+    <string name="details">Details</string>
+
+    <string name="home">Home</string>
+    <string name="favorites">Favorites</string>
+    <string name="cocktails">Cocktails</string>
+
+    <string name="app_logo">App logo</string>
+    <string name="back_button">Back button</string>
+    <string name="bottom_navigation_icon">Bottom navigation icon</string>
+    <string name="bottom_navigation_icon_selected">Bottom navigation icon selected</string>
 </resources>
