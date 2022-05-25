@@ -8,18 +8,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import com.example.cocktaildb.R
-import com.example.cocktaildb.utils.ItemViewState
+import com.example.cocktaildb.utils.CategoryViewState
 import com.example.cocktaildb.utils.QueryType
 import com.google.accompanist.flowlayout.FlowMainAxisAlignment
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.flowlayout.SizeMode
 
 @Composable
-fun GridLayout(
+fun CategoriesLayout(
     modifier: Modifier = Modifier,
     title: String,
-    items: List<ItemViewState>,
-    onItemClick: (queryParam: String, queryType: QueryType) -> Unit
+    categories: List<CategoryViewState>,
+    onCategoryClick: (queryParam: String, queryType: QueryType) -> Unit
 ) {
     Column {
         ContentTitle(text = title)
@@ -34,13 +34,10 @@ fun GridLayout(
             mainAxisSpacing = dimensionResource(id = R.dimen.padding_md),
             crossAxisSpacing = dimensionResource(id = R.dimen.padding_md)
         ) {
-            items.forEach {
-                ItemCard(
-                    itemViewState = it,
-                    onItemClick = onItemClick
-                    /*painter = painterResource(id = it.painterId),
-                    imageTitle = it.title,
-                    queryType = it.queryType*/
+            categories.forEach {
+                CategoryCard(
+                    category = it,
+                    onCategoryClick = onCategoryClick
                 )
             }
         }

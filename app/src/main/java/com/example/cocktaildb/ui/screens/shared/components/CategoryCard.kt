@@ -17,20 +17,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.cocktaildb.utils.ItemViewState
+import com.example.cocktaildb.utils.CategoryViewState
 import com.example.cocktaildb.utils.QueryType
 
 @Composable
-fun ItemCard(
+fun CategoryCard(
     modifier: Modifier = Modifier,
-    itemViewState: ItemViewState,
-    onItemClick: (queryParam: String, queryType: QueryType) -> Unit
+    category: CategoryViewState,
+    onCategoryClick: (queryParam: String, queryType: QueryType) -> Unit
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth(0.45f)
             .clickable {
-                onItemClick.invoke(itemViewState.query, itemViewState.queryType)
+                onCategoryClick.invoke(category.query, category.queryType)
             }
         //.padding(15.dp)
     ) {
@@ -41,7 +41,7 @@ fun ItemCard(
         ) {
             Box(modifier = modifier.height(200.dp)) {
                 Image(
-                    painter = painterResource(id = itemViewState.painterId),
+                    painter = painterResource(id = category.painterId),
                     contentDescription = "Image card",
                     alignment = Alignment.Center,
                     contentScale = ContentScale.Crop,
@@ -72,7 +72,7 @@ fun ItemCard(
                     contentAlignment = Alignment.BottomStart
                 ) {
                     Text(
-                        text = itemViewState.title,
+                        text = category.categoryName,
                         style = MaterialTheme.typography.h4
                     )
                 }

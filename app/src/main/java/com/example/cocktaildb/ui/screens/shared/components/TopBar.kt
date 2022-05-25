@@ -34,7 +34,8 @@ fun TopBar(
         navigationIcon = {
             if (currentRoute != null) {
                 if (currentRoute.startsWith(RootScreen.Details.route) ||
-                    currentRoute.startsWith(RootScreen.Cocktails.route)) {
+                    currentRoute.startsWith(RootScreen.Cocktails.route)
+                ) {
                     IconButton(onClick = { rootNavController.navigateUp() }) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_arrow_back),

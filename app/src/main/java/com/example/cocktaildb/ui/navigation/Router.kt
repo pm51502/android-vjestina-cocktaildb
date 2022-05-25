@@ -35,24 +35,24 @@ fun RootNavHost() {
     ) {
         composable(
             route = RootScreen.Main.route,
-            content = { MainScreen(
-                rootNavController = rootNavController,
-                bottomBarNavController = bottomBarNavController
-            ) })
+            content = {
+                MainScreen(
+                    rootNavController = rootNavController,
+                    bottomBarNavController = bottomBarNavController
+                )
+            })
 
         composable(
-            route = "${RootScreen.Cocktails.route}?category={category}&ingredient={ingredient}&id={id}",
+            route = "${RootScreen.Cocktails.route}?category={category}&ingredient={ingredient}",
             arguments = listOf(
                 navArgument("category") { defaultValue = "none" },
-                navArgument("ingredient") { defaultValue = "none" },
-                navArgument("id") { defaultValue = "none" }
+                navArgument("ingredient") { defaultValue = "none" }
             )
         ) { backStackEntry ->
             CocktailsScreen(
                 rootNavController = rootNavController,
                 category = backStackEntry.arguments?.getString("category"),
-                ingredient = backStackEntry.arguments?.getString("ingredient"),
-                id = backStackEntry.arguments?.getString("id")
+                ingredient = backStackEntry.arguments?.getString("ingredient")
             )
         }
 

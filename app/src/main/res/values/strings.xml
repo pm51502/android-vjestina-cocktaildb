@@ -12,4 +12,8 @@
     <string name="back_button">Back button</string>
     <string name="bottom_navigation_icon">Bottom navigation icon</string>
     <string name="bottom_navigation_icon_selected">Bottom navigation icon selected</string>
+    <string name="details_image">Details image</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="instructions">Instructions</string>
+    <string name="tags">Tags</string>
 </resources>

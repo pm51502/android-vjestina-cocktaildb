@@ -50,7 +50,7 @@ val Typography = Typography(
         fontFamily = ProximaNova,
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp,
-        lineHeight = 22.4.sp,
+        lineHeight = 18.sp,
         color = Color.White
     ),
     subtitle1 = TextStyle(

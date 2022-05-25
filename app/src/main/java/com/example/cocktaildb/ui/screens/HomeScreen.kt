@@ -5,18 +5,17 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import com.example.cocktaildb.ui.navigation.RootScreen
 import com.example.cocktaildb.ui.navigation.navigateToScreen
-import com.example.cocktaildb.ui.screens.shared.components.GridLayout
+import com.example.cocktaildb.ui.screens.shared.components.CategoriesLayout
 import com.example.cocktaildb.utils.QueryType
 import com.example.cocktaildb.utils.homeCategories
 
 @Composable
 fun HomeScreen(navController: NavController) {
 
-    val onItemClick = { queryParam: String, queryType: QueryType ->
+    val onCategoryClick = { queryParam: String, queryType: QueryType ->
         val queryString = when (queryType) {
             is QueryType.Category -> "category=$queryParam"
             is QueryType.Ingredient -> "ingredient=$queryParam"
-            is QueryType.CocktailId -> "id=$queryParam"
         }
 
         navigateToScreen(
@@ -27,26 +26,26 @@ fun HomeScreen(navController: NavController) {
 
     LazyColumn {
         item {
-            GridLayout(
+            CategoriesLayout(
                 title = "What's popular",
-                items = homeCategories.subList(0, 2),
-                onItemClick = onItemClick
+                categories = homeCategories.subList(0, 2),
+                onCategoryClick = onCategoryClick
             )
         }
 
         item {
-            GridLayout(
+            CategoriesLayout(
                 title = "Explore",
-                items = homeCategories.subList(2, 3),
-                onItemClick = onItemClick
+                categories = homeCategories.subList(2, 3),
+                onCategoryClick = onCategoryClick
             )
         }
 
         item {
-            GridLayout(
+            CategoriesLayout(
                 title = "Popular ingredients",
-                items = homeCategories.subList(3, 7),
-                onItemClick = onItemClick
+                categories = homeCategories.subList(3, 7),
+                onCategoryClick = onCategoryClick
             )
         }
     }
