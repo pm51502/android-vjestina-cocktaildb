@@ -23,6 +23,9 @@ import com.example.cocktaildb.ui.navigation.RootScreen
 import com.example.cocktaildb.ui.screens.shared.components.ContentTitle
 import com.example.cocktaildb.ui.screens.shared.components.TopBar
 import com.example.cocktaildb.utils.getCocktailDetails
+import com.example.cocktaildb.viewmodels.DetailsViewModel
+import org.koin.androidx.compose.viewModel
+import org.koin.core.parameter.parametersOf
 
 data class CocktailDetailsViewState(
     val id: Int,
@@ -51,6 +54,8 @@ fun DetailsScreen(
     rootNavController: NavController,
     cocktailId: Int?
 ) {
+    val detailsViewModel by viewModel<DetailsViewModel> { parametersOf(cocktailId) }
+
     val cocktailDetails = getCocktailDetails(cocktailId)
 
     val scaffoldState: ScaffoldState = rememberScaffoldState()

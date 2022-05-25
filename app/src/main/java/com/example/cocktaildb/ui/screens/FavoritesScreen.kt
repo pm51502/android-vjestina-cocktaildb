@@ -11,9 +11,13 @@ import com.example.cocktaildb.R
 import com.example.cocktaildb.ui.screens.shared.components.CocktailsLayout
 import com.example.cocktaildb.utils.CocktailViewState
 import com.example.cocktaildb.utils.cocktailsList
+import com.example.cocktaildb.viewmodels.FavoritesViewModel
+import org.koin.androidx.compose.viewModel
 
 @Composable
 fun FavoritesScreen(navController: NavController) {
+    val favoritesViewModel by viewModel<FavoritesViewModel>()
+
     var favoriteCocktails by remember {
         mutableStateOf(cocktailsList.filter { it.isFavorite })
     }

@@ -14,6 +14,9 @@ import com.example.cocktaildb.ui.screens.shared.components.TopBar
 import com.example.cocktaildb.utils.CocktailViewState
 import com.example.cocktaildb.utils.cocktailsList
 import androidx.compose.runtime.*
+import com.example.cocktaildb.viewmodels.CocktailsViewModel
+import org.koin.androidx.compose.viewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun CocktailsScreen(
@@ -22,6 +25,14 @@ fun CocktailsScreen(
     category: String?,
     ingredient: String?
 ) {
+    var cocktailsType = ""
+    if (category != null && ingredient != null) {
+        cocktailsType =
+            if (category != "none") category else ingredient
+    }
+
+    val cocktailsViewModel by viewModel<CocktailsViewModel> { parametersOf(cocktailsType) }
+
     var allCocktails by remember {
         mutableStateOf(cocktailsList)
     }
@@ -50,16 +61,10 @@ fun CocktailsScreen(
             )
         }
     ) {
-        var cocktailsType = ""
-        if (category != null && ingredient != null) {
-            cocktailsType =
-                if (category != "none") "$category cocktails" else "$ingredient cocktails"
-        }
-
         LazyColumn {
             item {
                 CocktailsLayout(
-                    title = cocktailsType,
+                    title = "$cocktailsType cocktails",
                     cocktails = allCocktails,
                     onCocktailClick = onCocktailClick,
                     onFavoriteClick = onFavoriteClick
