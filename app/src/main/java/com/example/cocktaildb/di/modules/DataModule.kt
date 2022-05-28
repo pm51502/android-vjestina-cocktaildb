@@ -12,9 +12,12 @@ val dataModule = module {
         )
     }
     single<CocktailApi> {
-        CocktailApiImpl()
+        CocktailApiImpl(httpClient = get())
     }
     single<CocktailDatabase> {
         CocktailDatabaseImpl()
+    }
+    single {
+        httpClient
     }
 }

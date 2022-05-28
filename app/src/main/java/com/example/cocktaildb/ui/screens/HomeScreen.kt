@@ -2,15 +2,22 @@ package com.example.cocktaildb.ui.screens
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.navigation.NavController
 import com.example.cocktaildb.ui.navigation.RootScreen
 import com.example.cocktaildb.ui.navigation.navigateToScreen
 import com.example.cocktaildb.ui.screens.shared.components.CategoriesLayout
+import com.example.cocktaildb.ui.screens.shared.components.CocktailList
+import com.example.cocktaildb.ui.screens.shared.components.SearchView
 import com.example.cocktaildb.utils.QueryType
 import com.example.cocktaildb.utils.homeCategories
 
 @Composable
 fun HomeScreen(navController: NavController) {
+
+    val textState = remember { mutableStateOf(TextFieldValue()) }
 
     val onCategoryClick = { queryParam: String, queryType: QueryType ->
         val queryString = when (queryType) {
@@ -25,6 +32,19 @@ fun HomeScreen(navController: NavController) {
     }
 
     LazyColumn {
+        item {
+            SearchView(state = textState)
+        }
+
+        if (textState.value.text != "") {
+            item {
+                CocktailList(
+                    navController = navController,
+                    state = textState
+                )
+            }
+        }
+
         item {
             CategoriesLayout(
                 title = "What's popular",
@@ -50,11 +70,3 @@ fun HomeScreen(navController: NavController) {
         }
     }
 }
-
-/*Text(text = "Home screen")
-Button(onClick = { navigateToScreen(
-    navController = navController,
-    route = "${RootScreen.Details.route}/123"
-) }) {
-    Text(text = "Go to details screen")
-}*/

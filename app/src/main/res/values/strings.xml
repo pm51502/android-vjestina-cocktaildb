@@ -16,4 +16,6 @@
     <string name="ingredients">Ingredients</string>
     <string name="instructions">Instructions</string>
     <string name="tags">Tags</string>
+    <string name="search">search</string>
+    <string name="search_icon">search icon</string>
 </resources>

@@ -8,19 +8,16 @@ import com.example.cocktaildb.ui.navigation.navigateToScreen
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource
 import com.example.cocktaildb.R
+import com.example.cocktaildb.data.Cocktail
 import com.example.cocktaildb.ui.screens.shared.components.CocktailsLayout
-import com.example.cocktaildb.utils.CocktailViewState
-import com.example.cocktaildb.utils.cocktailsList
 import com.example.cocktaildb.viewmodels.FavoritesViewModel
 import org.koin.androidx.compose.viewModel
 
 @Composable
 fun FavoritesScreen(navController: NavController) {
     val favoritesViewModel by viewModel<FavoritesViewModel>()
-
-    var favoriteCocktails by remember {
-        mutableStateOf(cocktailsList.filter { it.isFavorite })
-    }
+    val favoriteCocktails =
+        favoritesViewModel.favoriteCocktailsStateFlow.collectAsState(initial = emptyList()).value
 
     val onCocktailClick = { cocktailId: Int ->
         navigateToScreen(
@@ -29,10 +26,8 @@ fun FavoritesScreen(navController: NavController) {
         )
     }
 
-    val onFavoriteClick = { cocktail: CocktailViewState -> //CocktailView later
-        /*val index = favoriteCocktails.indexOf(cocktail)
-        val updatedCocktail = cocktail.copy(isFavorite = cocktail.isFavorite.not())
-        allCocktails = allCocktails.toMutableList().apply { set(index, updatedCocktail) }*/
+    val onFavoriteClick = { cocktail: Cocktail ->
+        favoritesViewModel.toggleFavorite(cocktail = cocktail)
     }
 
     LazyColumn {

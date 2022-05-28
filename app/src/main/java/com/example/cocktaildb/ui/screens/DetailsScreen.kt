@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithCache
@@ -14,38 +15,28 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import com.example.cocktaildb.R
 import com.example.cocktaildb.ui.navigation.RootScreen
 import com.example.cocktaildb.ui.screens.shared.components.ContentTitle
 import com.example.cocktaildb.ui.screens.shared.components.TopBar
-import com.example.cocktaildb.utils.getCocktailDetails
 import com.example.cocktaildb.viewmodels.DetailsViewModel
 import org.koin.androidx.compose.viewModel
 import org.koin.core.parameter.parametersOf
 
 data class CocktailDetailsViewState(
-    val id: Int,
-    val painterId: Int,
-    val name: String,
-    val category: String,
-    val alcoholic: String,
-    val ingredients: List<Ingredient>,
-    val instructions: String,
-    val tags: List<Tag>,
-    //imageUrl: String?
-)
-
-data class Ingredient(
-    val name: String,
-    val measure: String
-)
-
-data class Tag(
-    val name: String
+    val id: Int = 0,
+    val imageUrl: String? = "",
+    val name: String = "",
+    val category: String = "",
+    val alcoholic: String = "",
+    val ingredients: List<String> = emptyList(),
+    val measures: List<String> = emptyList(),
+    val instructions: String? = "",
+    val tags: List<String>? = emptyList(),
 )
 
 @Composable
@@ -55,8 +46,7 @@ fun DetailsScreen(
     cocktailId: Int?
 ) {
     val detailsViewModel by viewModel<DetailsViewModel> { parametersOf(cocktailId) }
-
-    val cocktailDetails = getCocktailDetails(cocktailId)
+    val cocktailDetails = detailsViewModel.cocktailDetailsStateFlow.collectAsState().value
 
     val scaffoldState: ScaffoldState = rememberScaffoldState()
     Scaffold(
@@ -76,7 +66,8 @@ fun DetailsScreen(
                         .height(dimensionResource(id = R.dimen.details_image_height))
                 ) {
                     Image(
-                        painter = painterResource(id = cocktailDetails.painterId),
+                        painter =  rememberAsyncImagePainter(model = cocktailDetails.imageUrl),
+                        //painterResource(id = cocktailDetails.painterId),
                         contentDescription = stringResource(id = R.string.details_image),
                         alignment = Alignment.Center,
                         contentScale = ContentScale.Crop,
@@ -126,36 +117,43 @@ fun DetailsScreen(
             item {
                 Column {
                     ContentTitle(text = stringResource(id = R.string.ingredients))
-                    IngredientsList(ingredients = cocktailDetails.ingredients)
+                    IngredientsList(
+                        ingredients = cocktailDetails.ingredients,
+                        measures = cocktailDetails.measures
+                    )
                 }
             }
 
-            item {
-                Column {
-                    ContentTitle(text = stringResource(id = R.string.instructions))
-                    Text(
-                        text = cocktailDetails.instructions,
-                        modifier = modifier.padding(
-                            start = dimensionResource(id = R.dimen.padding_md),
-                            top = dimensionResource(id = R.dimen.padding_xsm),
-                            end = dimensionResource(id = R.dimen.padding_md)
+            if (cocktailDetails.instructions != null) {
+                item {
+                    Column {
+                        ContentTitle(text = stringResource(id = R.string.instructions))
+                        Text(
+                            text = cocktailDetails.instructions,
+                            modifier = modifier.padding(
+                                start = dimensionResource(id = R.dimen.padding_md),
+                                top = dimensionResource(id = R.dimen.padding_xsm),
+                                end = dimensionResource(id = R.dimen.padding_md)
+                            )
                         )
-                    )
+                    }
                 }
             }
 
-            item {
-                Column {
-                    ContentTitle(text = stringResource(id = R.string.tags))
-                    Text(
-                        text = cocktailDetails.tags.joinToString { it.name },
-                        modifier = modifier.padding(
-                            start = dimensionResource(id = R.dimen.padding_md),
-                            top = dimensionResource(id = R.dimen.padding_xsm),
-                            end = dimensionResource(id = R.dimen.padding_md)
-                        ),
-                        style = MaterialTheme.typography.h3
-                    )
+            if (cocktailDetails.tags != null) {
+                item {
+                    Column {
+                        ContentTitle(text = stringResource(id = R.string.tags))
+                        Text(
+                            text = cocktailDetails.tags.joinToString { it },
+                            modifier = modifier.padding(
+                                start = dimensionResource(id = R.dimen.padding_md),
+                                top = dimensionResource(id = R.dimen.padding_xsm),
+                                end = dimensionResource(id = R.dimen.padding_md)
+                            ),
+                            style = MaterialTheme.typography.h3
+                        )
+                    }
                 }
             }
         }
@@ -165,7 +163,8 @@ fun DetailsScreen(
 @Composable
 fun IngredientsList(
     modifier: Modifier = Modifier,
-    ingredients: List<Ingredient>
+    ingredients: List<String>,
+    measures: List<String>
 ) {
     Column(
         modifier = modifier.padding(
@@ -174,7 +173,8 @@ fun IngredientsList(
             end = dimensionResource(id = R.dimen.padding_md)
         )
     ) {
-        ingredients.forEach {
+
+        ingredients.zip(measures) { ingredient, measure ->
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -186,7 +186,7 @@ fun IngredientsList(
                     drawCircle(Color(0xFF0C002A))
                 }
                 Text(
-                    text = "${it.name} (${it.measure})",
+                    text = "$ingredient ($measure)",
                     style = MaterialTheme.typography.h4,
                     color = Color(0xFF0C002A)
                 )

@@ -11,9 +11,8 @@ import com.example.cocktaildb.ui.navigation.RootScreen
 import com.example.cocktaildb.ui.navigation.navigateToScreen
 import com.example.cocktaildb.ui.screens.shared.components.CocktailsLayout
 import com.example.cocktaildb.ui.screens.shared.components.TopBar
-import com.example.cocktaildb.utils.CocktailViewState
-import com.example.cocktaildb.utils.cocktailsList
 import androidx.compose.runtime.*
+import com.example.cocktaildb.data.Cocktail
 import com.example.cocktaildb.viewmodels.CocktailsViewModel
 import org.koin.androidx.compose.viewModel
 import org.koin.core.parameter.parametersOf
@@ -32,10 +31,7 @@ fun CocktailsScreen(
     }
 
     val cocktailsViewModel by viewModel<CocktailsViewModel> { parametersOf(cocktailsType) }
-
-    var allCocktails by remember {
-        mutableStateOf(cocktailsList)
-    }
+    val categoryCocktails = cocktailsViewModel.categoryCocktailsStateFlow.collectAsState().value
 
     val onCocktailClick = { cocktailId: Int ->
         navigateToScreen(
@@ -44,11 +40,8 @@ fun CocktailsScreen(
         )
     }
 
-    val onFavoriteClick = { cocktail: CocktailViewState -> //CocktailView later
-        val index = allCocktails.indexOf(cocktail)
-        val updatedCocktail = cocktail.copy(isFavorite = cocktail.isFavorite.not())
-
-        allCocktails = allCocktails.toMutableList().apply { set(index, updatedCocktail) }
+    val onFavoriteClick = { cocktail: Cocktail ->
+        cocktailsViewModel.toggleFavorite(cocktail = cocktail)
     }
 
     val scaffoldState: ScaffoldState = rememberScaffoldState()
@@ -65,7 +58,7 @@ fun CocktailsScreen(
             item {
                 CocktailsLayout(
                     title = "$cocktailsType cocktails",
-                    cocktails = allCocktails,
+                    cocktails = categoryCocktails,
                     onCocktailClick = onCocktailClick,
                     onFavoriteClick = onFavoriteClick
                 )
