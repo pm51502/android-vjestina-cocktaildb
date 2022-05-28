@@ -1,5 +1,7 @@
 package com.example.cocktaildb.ui.screens
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
@@ -13,6 +15,7 @@ import com.example.cocktaildb.ui.screens.shared.components.CocktailsLayout
 import com.example.cocktaildb.ui.screens.shared.components.TopBar
 import androidx.compose.runtime.*
 import com.example.cocktaildb.data.Cocktail
+import com.example.cocktaildb.ui.screens.shared.components.CircularProgressBar
 import com.example.cocktaildb.viewmodels.CocktailsViewModel
 import org.koin.androidx.compose.viewModel
 import org.koin.core.parameter.parametersOf
@@ -54,14 +57,22 @@ fun CocktailsScreen(
             )
         }
     ) {
-        LazyColumn {
-            item {
-                CocktailsLayout(
-                    title = "$cocktailsType cocktails",
-                    cocktails = categoryCocktails,
-                    onCocktailClick = onCocktailClick,
-                    onFavoriteClick = onFavoriteClick
-                )
+        Box(modifier = modifier.fillMaxSize()) {
+            LazyColumn {
+
+                item {
+                    CocktailsLayout(
+                        title = "$cocktailsType cocktails",
+                        cocktails = categoryCocktails,
+                        onCocktailClick = onCocktailClick,
+                        onFavoriteClick = onFavoriteClick
+                    )
+                }
+
+                if (categoryCocktails.isEmpty())
+                    item {
+                        CircularProgressBar()
+                    }
             }
         }
     }
