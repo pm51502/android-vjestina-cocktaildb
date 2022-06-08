@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -17,11 +16,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.cocktaildb.R
-import com.example.cocktaildb.data.Cocktail
 import com.example.cocktaildb.utils.CocktailViewState
 
 @Composable
@@ -29,26 +26,22 @@ fun CocktailCard(
     modifier: Modifier = Modifier,
     cocktail: CocktailViewState,
     onCocktailClick: (cocktailId: Int) -> Unit,
-    onFavoriteClick: (cocktail: Cocktail) -> Unit
+    onFavoriteClick: (cocktail: CocktailViewState) -> Unit
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth(0.45f)
-            //.width(170.dp)
             .clickable {
                 onCocktailClick.invoke(cocktail.id)
             }
-        //.padding(15.dp)
     ) {
         Card(
-            //modifier = modifier.fillMaxWidth(),
             shape = RoundedCornerShape(15.dp),
             elevation = 5.dp
         ) {
             Box(modifier = modifier.height(200.dp)) {
                 Image(
                     painter = rememberAsyncImagePainter(model = cocktail.imageUrl),
-                    //painterResource(id = cocktail.painterId),
                     contentDescription = "Image card",
                     alignment = Alignment.Center,
                     contentScale = ContentScale.Crop,

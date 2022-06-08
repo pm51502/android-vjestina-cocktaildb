@@ -22,6 +22,11 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
     ),
+    body2 = TextStyle(
+        fontFamily = ProximaNova,
+        fontWeight = FontWeight.Bold,
+        fontSize = 18.sp
+    ),
     button = TextStyle(
         fontFamily = ProximaNova,
         fontWeight = FontWeight.Bold,

@@ -1,4 +1,4 @@
-package com.example.cocktaildb.data
+package com.example.cocktaildb.network
 
 import android.util.Log
 import io.ktor.client.*

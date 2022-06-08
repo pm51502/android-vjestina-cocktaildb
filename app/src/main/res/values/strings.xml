@@ -18,4 +18,6 @@
     <string name="tags">Tags</string>
     <string name="search">search</string>
     <string name="search_icon">search icon</string>
+    <string name="no_internet">No internet</string>
+    <string name="no_internet_message">Oops, looks like there\'s no\nInternet connection</string>
 </resources>

@@ -11,7 +11,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cocktaildb.R
-import com.example.cocktaildb.data.Cocktail
+import com.example.cocktaildb.network.Cocktail
 
 @Composable
 fun CocktailListItem(

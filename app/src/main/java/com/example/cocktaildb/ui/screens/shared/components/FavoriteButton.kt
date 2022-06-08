@@ -12,22 +12,20 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import com.example.cocktaildb.R
-import com.example.cocktaildb.data.Cocktail
-import com.example.cocktaildb.data.toCocktail
 import com.example.cocktaildb.utils.CocktailViewState
 
 @Composable
 fun FavoriteButton(
     modifier: Modifier = Modifier,
     item: CocktailViewState,
-    onFavoriteClick: (cocktail: Cocktail) -> Unit
+    onFavoriteClick: (cocktail: CocktailViewState) -> Unit
 ) {
     Image(
         painter = painterResource(id = if (item.isFavorite) R.drawable.ic_favorite_filled else R.drawable.ic_favorite),
         contentDescription = null,
         modifier = modifier
             .clickable {
-                onFavoriteClick.invoke(item.toCocktail())
+                onFavoriteClick.invoke(item.copy(isFavorite = item.isFavorite.not()))
             }
             .size(dimensionResource(id = R.dimen.large_spacing))
             .background(

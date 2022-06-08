@@ -14,8 +14,9 @@ import com.example.cocktaildb.ui.navigation.navigateToScreen
 import com.example.cocktaildb.ui.screens.shared.components.CocktailsLayout
 import com.example.cocktaildb.ui.screens.shared.components.TopBar
 import androidx.compose.runtime.*
-import com.example.cocktaildb.data.Cocktail
 import com.example.cocktaildb.ui.screens.shared.components.CircularProgressBar
+import com.example.cocktaildb.utils.CocktailViewState
+import com.example.cocktaildb.utils.toDbCocktail
 import com.example.cocktaildb.viewmodels.CocktailsViewModel
 import org.koin.androidx.compose.viewModel
 import org.koin.core.parameter.parametersOf
@@ -43,8 +44,11 @@ fun CocktailsScreen(
         )
     }
 
-    val onFavoriteClick = { cocktail: Cocktail ->
-        cocktailsViewModel.toggleFavorite(cocktail = cocktail)
+    val onFavoriteClick = { cocktail: CocktailViewState ->
+        if (!cocktail.isFavorite)
+            cocktailsViewModel.deleteFavoriteCocktail(cocktailId = cocktail.id)
+        else
+            cocktailsViewModel.insertFavoriteCocktail(cocktail = cocktail.toDbCocktail())
     }
 
     val scaffoldState: ScaffoldState = rememberScaffoldState()
@@ -59,7 +63,6 @@ fun CocktailsScreen(
     ) {
         Box(modifier = modifier.fillMaxSize()) {
             LazyColumn {
-
                 item {
                     CocktailsLayout(
                         title = "$cocktailsType cocktails",

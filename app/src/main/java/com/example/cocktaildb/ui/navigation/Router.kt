@@ -3,7 +3,6 @@ package com.example.cocktaildb.ui.navigation
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost

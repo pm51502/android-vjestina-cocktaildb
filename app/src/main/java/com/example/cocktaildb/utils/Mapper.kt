@@ -1,15 +1,12 @@
-package com.example.cocktaildb.data
+package com.example.cocktaildb.utils
 
+import com.example.cocktaildb.database.entity.DbCocktail
+import com.example.cocktaildb.network.ApiConstants
+import com.example.cocktaildb.network.Cocktail
+import com.example.cocktaildb.network.CocktailDetails
 import com.example.cocktaildb.ui.screens.CocktailDetailsViewState
-import com.example.cocktaildb.utils.CocktailViewState
 import com.google.gson.Gson
 import org.json.JSONObject
-
-fun CocktailViewState.toCocktail() = Cocktail(
-    idDrink = id,
-    strDrinkThumb = imageUrl,
-    strDrink = cocktailName
-)
 
 fun Cocktail.toCocktailViewState(
     isFavorite: Boolean
@@ -20,11 +17,23 @@ fun Cocktail.toCocktailViewState(
     isFavorite = isFavorite
 )
 
+fun DbCocktail.toCocktail() = Cocktail(
+    idDrink = id,
+    strDrinkThumb = imageUrl,
+    strDrink = cocktailName
+)
+
+fun CocktailViewState.toDbCocktail() = DbCocktail(
+    id = id,
+    imageUrl = imageUrl,
+    cocktailName = cocktailName
+)
+
 fun toCocktailDetailsViewState(
     cocktailDetails: CocktailDetails
 ): CocktailDetailsViewState {
     val gson = Gson()
-    var jsonString = gson.toJson(cocktailDetails)
+    val jsonString = gson.toJson(cocktailDetails)
     val jsonObject = JSONObject(jsonString)
 
     val ingredients = mutableListOf<String>()

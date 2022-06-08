@@ -2,9 +2,9 @@ package com.example.cocktaildb.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cocktaildb.data.Cocktail
-import com.example.cocktaildb.data.CocktailRepository
-import com.example.cocktaildb.data.toCocktailViewState
+import com.example.cocktaildb.database.entity.DbCocktail
+import com.example.cocktaildb.repository.CocktailRepository
+import com.example.cocktaildb.utils.toCocktailViewState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -29,9 +29,15 @@ class CocktailsViewModel(
         initialValue = emptyList()
     )
 
-    fun toggleFavorite(cocktail: Cocktail) {
+    fun insertFavoriteCocktail(cocktail: DbCocktail) {
         viewModelScope.launch(Dispatchers.Default) {
-            cocktailRepository.toggleFavorite(cocktail = cocktail)
+            cocktailRepository.insertCocktail(cocktail = cocktail)
+        }
+    }
+
+    fun deleteFavoriteCocktail(cocktailId: Int) {
+        viewModelScope.launch(Dispatchers.Default) {
+            cocktailRepository.deleteCocktail(cocktailId = cocktailId)
         }
     }
 }
