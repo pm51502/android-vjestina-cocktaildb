@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import com.example.cocktaildb.R
-import com.example.cocktaildb.network.Cocktail
 import com.example.cocktaildb.utils.CocktailViewState
 import com.google.accompanist.flowlayout.FlowMainAxisAlignment
 import com.google.accompanist.flowlayout.FlowRow
@@ -40,7 +39,6 @@ fun CocktailsLayout(
                 )
             }
         }
-
         Spacer(modifier = modifier.height(dimensionResource(id = R.dimen.spacer_m)))
     }
 }

@@ -24,8 +24,6 @@ import com.example.cocktaildb.R
 
 @Composable
 fun SearchView(state: MutableState<TextFieldValue>) {
-    val smallPadding = dimensionResource(id = R.dimen.padding_sm)
-
     TextField(
         value = state.value,
         onValueChange = { value ->
@@ -33,9 +31,9 @@ fun SearchView(state: MutableState<TextFieldValue>) {
         },
         modifier = Modifier
             .padding(
-                start = smallPadding,
-                top = smallPadding,
-                end = smallPadding
+                start = dimensionResource(id = R.dimen.padding_sm),
+                top = dimensionResource(id = R.dimen.padding_sm),
+                end = dimensionResource(id = R.dimen.padding_sm)
             )
             .fillMaxWidth(),
         leadingIcon = {
@@ -43,7 +41,7 @@ fun SearchView(state: MutableState<TextFieldValue>) {
                 painter = painterResource(id = R.drawable.ic_search),
                 contentDescription = stringResource(id = R.string.search_icon),
                 modifier = Modifier
-                    .padding(smallPadding)
+                    .padding(dimensionResource(id = R.dimen.padding_sm))
                     .size(dimensionResource(id = R.dimen.icon_size))
             )
         },

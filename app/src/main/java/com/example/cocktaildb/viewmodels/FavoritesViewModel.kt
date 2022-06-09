@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class FavoritesViewModel(
     private val cocktailRepository: CocktailRepository
-): ViewModel() {
+) : ViewModel() {
     val favoriteCocktailsStateFlow = cocktailRepository
         .getFavoriteCocktails()
         .map { cocktailsList ->

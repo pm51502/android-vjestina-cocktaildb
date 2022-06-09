@@ -8,8 +8,4 @@ class SearchViewModel(
 ) : ViewModel() {
     val cocktailSearchSharedFlow = cocktailRepository
         .searchCocktailByName(cocktailName = "")
-
-    fun refreshSearchResults(cocktailName: String) {
-        cocktailRepository.searchCocktailByName(cocktailName = cocktailName)
-    }
 }

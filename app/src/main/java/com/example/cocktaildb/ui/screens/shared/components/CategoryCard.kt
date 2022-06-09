@@ -32,7 +32,6 @@ fun CategoryCard(
             .clickable {
                 onCategoryClick.invoke(category.query, category.queryType)
             }
-        //.padding(15.dp)
     ) {
         Card(
             modifier = modifier.fillMaxWidth(),

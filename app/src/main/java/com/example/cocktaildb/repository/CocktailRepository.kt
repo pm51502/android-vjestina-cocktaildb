@@ -41,7 +41,7 @@ class CocktailRepositoryImpl(
         emit(cocktailApi.searchCocktailByName(cocktailName = cocktailName).drinks)
     }.shareIn(
         sharingScope,
-        SharingStarted.Lazily,
+        SharingStarted.Eagerly,
         replay = 1
     )
 

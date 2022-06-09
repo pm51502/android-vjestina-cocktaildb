@@ -29,6 +29,13 @@ fun CocktailViewState.toDbCocktail() = DbCocktail(
     cocktailName = cocktailName
 )
 
+fun CocktailDetailsViewState.toCocktailViewState() = CocktailViewState(
+    id = id,
+    imageUrl = imageUrl,
+    cocktailName = name,
+    isFavorite = isFavorite
+)
+
 fun toCocktailDetailsViewState(
     cocktailDetails: CocktailDetails
 ): CocktailDetailsViewState {
@@ -62,7 +69,8 @@ fun toCocktailDetailsViewState(
         ingredients = ingredients,
         measures = measures,
         instructions = cocktailDetails.strInstructions,
-        tags = tags
+        tags = tags,
+        isFavorite = cocktailDetails.isFavorite
     )
 }
 

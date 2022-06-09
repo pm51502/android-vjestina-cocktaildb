@@ -23,7 +23,7 @@ val viewModelModule = module {
             cocktailId = params.get()
         )
     }
-    viewModel { params ->
+    viewModel {
         SearchViewModel(
             cocktailRepository = get()
         )

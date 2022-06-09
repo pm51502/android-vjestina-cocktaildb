@@ -22,7 +22,11 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.cocktaildb.R
 import com.example.cocktaildb.ui.navigation.RootScreen
 import com.example.cocktaildb.ui.screens.shared.components.ContentTitle
+import com.example.cocktaildb.ui.screens.shared.components.FavoriteButton
 import com.example.cocktaildb.ui.screens.shared.components.TopBar
+import com.example.cocktaildb.utils.CocktailViewState
+import com.example.cocktaildb.utils.toCocktailViewState
+import com.example.cocktaildb.utils.toDbCocktail
 import com.example.cocktaildb.viewmodels.DetailsViewModel
 import org.koin.androidx.compose.viewModel
 import org.koin.core.parameter.parametersOf
@@ -37,6 +41,7 @@ data class CocktailDetailsViewState(
     val measures: List<String> = emptyList(),
     val instructions: String? = "",
     val tags: List<String>? = emptyList(),
+    val isFavorite: Boolean = false
 )
 
 @Composable
@@ -47,6 +52,13 @@ fun DetailsScreen(
 ) {
     val detailsViewModel by viewModel<DetailsViewModel> { parametersOf(cocktailId) }
     val cocktailDetails = detailsViewModel.cocktailDetailsStateFlow.collectAsState().value
+
+    val onFavoriteClick = { cocktail: CocktailViewState ->
+        if (!cocktail.isFavorite)
+            detailsViewModel.deleteFavoriteCocktail(cocktailId = cocktail.id)
+        else
+            detailsViewModel.insertFavoriteCocktail(cocktail = cocktail.toDbCocktail())
+    }
 
     val scaffoldState: ScaffoldState = rememberScaffoldState()
     Scaffold(
@@ -66,7 +78,7 @@ fun DetailsScreen(
                         .height(dimensionResource(id = R.dimen.details_image_height))
                 ) {
                     Image(
-                        painter =  rememberAsyncImagePainter(model = cocktailDetails.imageUrl),
+                        painter = rememberAsyncImagePainter(model = cocktailDetails.imageUrl),
                         //painterResource(id = cocktailDetails.painterId),
                         contentDescription = stringResource(id = R.string.details_image),
                         alignment = Alignment.Center,
@@ -109,6 +121,13 @@ fun DetailsScreen(
                         Text(
                             text = cocktailDetails.alcoholic,
                             style = MaterialTheme.typography.subtitle1
+                        )
+
+                        Spacer(modifier = modifier.height(dimensionResource(id = R.dimen.spacer_m)))
+
+                        FavoriteButton(
+                            item = cocktailDetails.toCocktailViewState(),
+                            onFavoriteClick = onFavoriteClick
                         )
                     }
                 }

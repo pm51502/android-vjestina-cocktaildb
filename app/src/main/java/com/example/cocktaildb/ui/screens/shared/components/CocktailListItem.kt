@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cocktaildb.R
@@ -23,9 +24,12 @@ fun CocktailListItem(
         modifier = modifier
             .clickable(onClick = { onItemClick.invoke(cocktail.idDrink) })
             .background(colorResource(id = R.color.dark_purple))
-            .height(57.dp)
+            .height(dimensionResource(id = R.dimen.cocktail_list_item_height))
             .fillMaxWidth()
-            .padding(PaddingValues(8.dp, 16.dp))
+            .padding(PaddingValues(
+                dimensionResource(id = R.dimen.cocktail_list_item_padding_h),
+                dimensionResource(id = R.dimen.cocktail_list_item_padding_v)
+            ))
     ) {
         Text(
             text = cocktail.strDrink,

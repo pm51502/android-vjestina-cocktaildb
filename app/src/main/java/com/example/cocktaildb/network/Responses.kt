@@ -2,6 +2,7 @@ package com.example.cocktaildb.network
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
 @Serializable
 data class CocktailsResponse(
@@ -46,15 +47,15 @@ data class CocktailDetailsResponse(
 @Serializable
 data class CocktailDetails(
     @SerialName("idDrink")
-    val idDrink: Int,
+    val idDrink: Int = 1,
     @SerialName("strDrink")
-    val strDrink: String,
+    val strDrink: String = "",
     @SerialName("strDrinkThumb")
     val strDrinkThumb: String? = null,
     @SerialName("strCategory")
-    val strCategory: String,
+    val strCategory: String = "",
     @SerialName("strAlcoholic")
-    val strAlcoholic: String,
+    val strAlcoholic: String = "",
     @SerialName("strIngredient1")
     val strIngredient1: String? = null,
     @SerialName("strIngredient2")
@@ -118,7 +119,9 @@ data class CocktailDetails(
     @SerialName("strInstructions")
     val strInstructions: String? = null,
     @SerialName("strTags")
-    val strTags: String? = null
+    val strTags: String? = null,
+    @Transient
+    val isFavorite: Boolean = false
 )
 
 @Serializable

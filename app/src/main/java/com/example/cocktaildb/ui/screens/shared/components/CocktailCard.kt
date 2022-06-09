@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.cocktaildb.R
@@ -42,7 +43,7 @@ fun CocktailCard(
             Box(modifier = modifier.height(200.dp)) {
                 Image(
                     painter = rememberAsyncImagePainter(model = cocktail.imageUrl),
-                    contentDescription = "Image card",
+                    contentDescription = stringResource(id = R.string.image_card),
                     alignment = Alignment.Center,
                     contentScale = ContentScale.Crop,
                     modifier = modifier
