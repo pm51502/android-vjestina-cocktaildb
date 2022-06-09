@@ -55,7 +55,7 @@ fun HomeScreen(navController: NavController) {
 
             item {
                 CategoriesLayout(
-                    title = "What's popular",
+                    title = "Popular cocktails",
                     categories = homeCategories.subList(0, 2),
                     onCategoryClick = onCategoryClick
                 )
